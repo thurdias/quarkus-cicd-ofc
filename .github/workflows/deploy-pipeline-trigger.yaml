@@ -25,4 +25,4 @@ jobs:
 
       - name: Apply PipelineRun for Promotion
         run: |
-          oc apply -f .tekton/runs/promotion-pipeline-run.yaml
+          oc apply -f .tekton/pipelines/run/promotion-pipeline-run.yaml

@@ -25,4 +25,4 @@ jobs:
 
       - name: Apply PipelineRun for Build
         run: |
-          oc apply -f .tekton/runs/build-pipeline-run.yaml
+          oc apply -f .tekton/pipelines/run/build-pipeline-run.yaml
