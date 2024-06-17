@@ -10,7 +10,7 @@ spec:
     - name: update
       image: alpine/git
       script: |
-        git clone https://github.com/thurdias/quarkus-cicd-ofc.git /workspace/shared-workspace/cicd-repo
+        git clone https://github.com/my-org/cicd-repo.git /workspace/shared-workspace/cicd-repo
         cd /workspace/shared-workspace/cicd-repo/k8s/stage
         sed -i 's|quay.io/my-repo/quarkus-app:.*|docker.io/my-dockerhub-username/quarkus-app:latest|' deployment.yaml
         git commit -am "Update image to docker.io/my-dockerhub-username/quarkus-app:latest"

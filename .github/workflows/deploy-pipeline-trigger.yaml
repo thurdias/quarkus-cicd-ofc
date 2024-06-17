@@ -23,7 +23,6 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
 
-      - name: Trigger Tekton Promotion Pipeline
+      - name: Apply PipelineRun for Promotion
         run: |
-          tkn pipeline start promotion-pipeline -n quarkus-ci \
-            --workspace name=shared-workspace,volumeClaimTemplateFile=volume-claim-template.yaml
+          oc apply -f .tekton/runs/promotion-pipeline-run.yaml

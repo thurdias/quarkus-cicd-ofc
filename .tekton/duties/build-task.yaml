@@ -1,10 +1,13 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: test-task
+  name: build-task
+  namespace: quarkus-ci
 spec:
+  workspaces:
+    - name: shared-workspace
   steps:
-    - name: test
+    - name: build
       image: maven:3.6.3-jdk-8
       script: |
-        mvn test
+        mvn package

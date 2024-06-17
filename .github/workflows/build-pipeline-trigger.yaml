@@ -1,4 +1,4 @@
-name: CD Deploy Pipeline
+name: CI Build Pipeline
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,6 +23,6 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
 
-      - name: Apply PipelineRun for Promotion
+      - name: Apply PipelineRun for Build
         run: |
-          kubectl apply -f promotion-pipeline-run.yaml
+          oc apply -f .tekton/runs/build-pipeline-run.yaml
