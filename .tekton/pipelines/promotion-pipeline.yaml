@@ -6,13 +6,26 @@ metadata:
 spec:
   workspaces:
     - name: shared-workspace
+  params:
+    - name: repo-url
+      description: The URL of the Git repository to clone
+      type: string
+    - name: revision
+      description: The git revision (branch, tag, or commit) to clone
+      type: string
+      default: "main"
   tasks:
     - name: get-stage-config
       taskRef:
         name: git-clone
       workspaces:
-        - name: shared-workspace
+        - name: output
           workspace: shared-workspace
+      params:
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.revision)
     - name: run-tests
       taskRef:
         name: test-task

@@ -6,6 +6,11 @@ metadata:
 spec:
   pipelineRef:
     name: promotion-pipeline
+  params:
+    - name: repo-url
+      value: "https://github.com/thurdias/quarkus-cicd-ofc.git"
+    - name: revision
+      value: "main"
   workspaces:
     - name: shared-workspace
       volumeClaimTemplate:
