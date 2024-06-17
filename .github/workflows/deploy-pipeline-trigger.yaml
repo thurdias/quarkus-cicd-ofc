@@ -1,0 +1,17 @@
+name: CD Deploy Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Trigger Tekton Promotion Pipeline
+        run: |
+          tkn pipeline start promotion-pipeline -n quarkus-ci \
+            --workspace name=shared-workspace,claimName=your-pvc-name

@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-pipeline
+spec:
+  tasks:
+    - name: lint
+      taskRef:
+        name: lint-task
+    - name: test
+      taskRef:
+        name: test-task
+      runAfter: [lint]
+    - name: build
+      taskRef:
+        name: build-task
+      runAfter: [test]
+    - name: push-image
+      taskRef:
+        name: push-image-task
+      runAfter: [build]
+    - name: update-manifest
+      taskRef:
+        name: update-manifest-task
+      runAfter: [push-image]

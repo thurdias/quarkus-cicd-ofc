@@ -1,0 +1,17 @@
+name: CI Build Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Trigger Tekton Pipeline
+        run: |
+          tkn pipeline start build-pipeline -n quarkus-ci \
+            --workspace name=shared-workspace,claimName=your-pvc-name

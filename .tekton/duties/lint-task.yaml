@@ -1,0 +1,10 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: lint-task
+spec:
+  steps:
+    - name: lint
+      image: maven:3.6.3-jdk-8
+      script: |
+        mvn checkstyle:check

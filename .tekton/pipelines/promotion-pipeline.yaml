@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: promotion-pipeline
+spec:
+  tasks:
+    - name: get-stage-config
+      taskRef:
+        name: git-clone
+    - name: run-tests
+      taskRef:
+        name: test-task
+      runAfter: [get-stage-config]
+    - name: create-pr
+      taskRef:
+        name: create-pr-task
+      runAfter: [run-tests]
