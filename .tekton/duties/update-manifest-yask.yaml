@@ -2,13 +2,16 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: update-manifest-task
+  namespace: quarkus-ci
 spec:
+  workspaces:
+    - name: shared-workspace
   steps:
     - name: update
       image: alpine/git
       script: |
-        git clone https://github.com/my-org/cicd-repo.git
-        cd cicd-repo/k8s/stage
-        sed -i 's|quay.io/my-repo/quarkus-app:.*|docker.io/arthurdbs/quarkus-app:latest|' deployment.yaml
-        git commit -am "Update image to docker.io/arthurdbs/quarkus-app:latest"
+        git clone https://github.com/my-org/cicd-repo.git /workspace/shared-workspace/cicd-repo
+        cd /workspace/shared-workspace/cicd-repo/k8s/stage
+        sed -i 's|quay.io/my-repo/quarkus-app:.*|docker.io/my-dockerhub-username/quarkus-app:latest|' deployment.yaml
+        git commit -am "Update image to docker.io/my-dockerhub-username/quarkus-app:latest"
         git push

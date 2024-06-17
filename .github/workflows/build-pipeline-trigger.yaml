@@ -26,4 +26,4 @@ jobs:
       - name: Trigger Tekton Pipeline
         run: |
           tkn pipeline start build-pipeline -n quarkus-ci \
-            --workspace name=shared-workspace,claimName=your-pvc-name
+            --workspace name=shared-workspace,volumeClaimTemplateFile=volume-claim-template.yaml

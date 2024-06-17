@@ -2,16 +2,28 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: promotion-pipeline
+  namespace: quarkus-ci
 spec:
+  workspaces:
+    - name: shared-workspace
   tasks:
     - name: get-stage-config
       taskRef:
         name: git-clone
+      workspaces:
+        - name: shared-workspace
+          workspace: shared-workspace
     - name: run-tests
       taskRef:
         name: test-task
       runAfter: [get-stage-config]
+      workspaces:
+        - name: shared-workspace
+          workspace: shared-workspace
     - name: create-pr
       taskRef:
         name: create-pr-task
       runAfter: [run-tests]
+      workspaces:
+        - name: shared-workspace
+          workspace: shared-workspace

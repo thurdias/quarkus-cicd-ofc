@@ -2,26 +2,25 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: push-image-task
+  namespace: quarkus-ci
 spec:
+  workspaces:
+    - name: shared-workspace
   steps:
     - name: push
       image: docker:latest
+      env:
+        - name: DOCKER_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: docker-hub-secret
+              key: username
+        - name: DOCKER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: docker-hub-secret
+              key: password
       script: |
-        echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
-        docker build -t $(DOCKER_USERNAME)/quarkus-app:latest .
-        docker push $(DOCKER_USERNAME)/quarkus-app:latest
-  volumes:
-    - name: dockerhub-secret
-      secret:
-        secretName: docker-hub-secret
-  env:
-    - name: DOCKER_USERNAME
-      valueFrom:
-        secretKeyRef:
-          name: docker-hub-secret
-          key: username
-    - name: DOCKER_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: docker-hub-secret
-          key: password
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker build -t "$DOCKER_USERNAME"/quarkus-app:latest .
+        docker push "$DOCKER_USERNAME"/quarkus-app:latest
