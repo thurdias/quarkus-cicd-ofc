@@ -1,11 +1,11 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: build-pipeline-run
+  name: promotion-pipeline-run
   namespace: quarkus-ci
 spec:
   pipelineRef:
-    name: build-pipeline
+    name: promotion-pipeline
   workspaces:
     - name: shared-workspace
       volumeClaimTemplate:
