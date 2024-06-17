@@ -1,4 +1,4 @@
-name: CI Build Pipeline
+name: CD Deploy Pipeline
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,9 +18,11 @@ jobs:
           sudo tar xvzf tkn_0.25.0_Linux_x86_64.tar.gz -C /usr/local/bin/ tkn
 
       - name: Set up kubeconfig
-        run: echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
-
-      - name: Trigger Tekton Pipeline
         run: |
-          tkn pipeline start build-pipeline -n quarkus-ci \
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+
+      - name: Trigger Tekton Promotion Pipeline
+        run: |
+          tkn pipeline start promotion-pipeline -n quarkus-ci \
             --workspace name=shared-workspace,claimName=your-pvc-name
