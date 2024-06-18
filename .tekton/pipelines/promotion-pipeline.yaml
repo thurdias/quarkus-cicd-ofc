@@ -19,7 +19,7 @@ spec:
       taskRef:
         name: git-clone
       workspaces:
-        - name: output
+        - name: shared-workspace
           workspace: shared-workspace
       params:
         - name: url
@@ -28,7 +28,7 @@ spec:
           value: $(params.revision)
     - name: run-tests
       taskRef:
-        name: test-task
+        name: test-task 
       runAfter: [get-stage-config]
       workspaces:
         - name: shared-workspace

@@ -10,4 +10,5 @@ spec:
     - name: build
       image: maven:3.6.3-jdk-8
       script: |
+        cd /workspace/shared-workspace
         mvn package

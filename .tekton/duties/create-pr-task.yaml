@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: create-pr-task
+  namespace: quarkus-ci
+spec:
+  params:
+    - name: repo-url
+      description: The URL of the Git repository
+      type: string
+    - name: branch
+      description: The branch to create a PR for
+      type: string
+    - name: title
+      description: The title of the pull request
+      type: string
+    - name: description
+      description: The description of the pull request
+      type: string
+  workspaces:
+    - name: shared-workspace
+  steps:
+    - name: create-pr
+      image: hub
+      script: |
+        cd /workspace/shared-workspace
+        hub pull-request -b main -h $(params.branch) -m "$(params.title)" -m "$(params.description)"
