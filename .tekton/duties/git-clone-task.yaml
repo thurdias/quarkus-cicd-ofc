@@ -2,16 +2,26 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: git-clone
-  namespace: quarkus-ci
+  namespace:  quarkus-ci
 spec:
   workspaces:
-    - name: shared-workspace
+    - name: output
+  params:
+    - name: url
+      description: The URL of the Git repository to clone
+      type: string
+    - name: revision
+      description: The git revision (branch, tag, or commit) to clone
+      type: string
+      default: "main"
   steps:
     - name: clone
       image: alpine/git
       script: |
-        git clone $(params.url) $(workspaces.shared-workspace.path)
-  params:
-    - name: url
-      type: string
-      description: The URL of the Git repository to clone
+        #!/bin/sh
+        set -e
+        CLONE_DIR="/workspace/output/clone-dir"
+        mkdir -p ${CLONE_DIR}
+        git clone $(params.url) ${CLONE_DIR}
+        cd ${CLONE_DIR}
+        git checkout $(params.revision)

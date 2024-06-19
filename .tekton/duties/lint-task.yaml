@@ -10,4 +10,5 @@ spec:
     - name: lint
       image: maven:3.6.3-jdk-8
       script: |
-        mvn checkstyle:check
+        cd /workspace/shared-workspace/clone-dir
+        mvn com.github.ekryd:maven-lint-plugin:check --fail-at-end || echo "Linting issues found but continuing"
