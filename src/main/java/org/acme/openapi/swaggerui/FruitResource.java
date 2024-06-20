@@ -57,7 +57,7 @@ public final class FruitResource {
      */
     @DELETE
     public Set<Fruit> delete(final Fruit fruit) {
-        fruits.removeIf(existingFruit -> 
+        fruits.removeIf(existingFruit ->
             existingFruit.getName().contentEquals(fruit.getName())
         );
         return fruits;
