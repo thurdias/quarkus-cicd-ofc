@@ -5,7 +5,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/my-org/cicd-repo.git
+    repoURL: https://github.com/thurdias/quarkus-cicd-ofc.git
     targetRevision: HEAD
     path: k8s/stage
   destination:
