@@ -7,20 +7,24 @@ spec:
   workspaces:
     - name: shared-workspace
   steps:
-    - name: push
-      image: docker:latest
+    - name: build-and-push
+      image: quay.io/buildah/stable
+      securityContext:
+        privileged: true
       env:
-        - name: DOCKER_USERNAME
+        - name: REGISTRY_USERNAME
           valueFrom:
             secretKeyRef:
               name: docker-hub-secret
-              key: username
-        - name: DOCKER_PASSWORD
+              key: DOCKER_USERNAME
+        - name: REGISTRY_PASSWORD
           valueFrom:
             secretKeyRef:
               name: docker-hub-secret
-              key: password
+              key: DOCKER_PASSWORD
+        - name: REGISTRY_URL
+          value: docker.io 
       script: |
-        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker build -t "$DOCKER_USERNAME"/quarkus-app:latest .
-        docker push "$DOCKER_USERNAME"/quarkus-app:latest
+        buildah --storage-driver vfs login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD" "$REGISTRY_URL"
+        buildah --storage-driver vfs bud -f /workspace/shared-workspace/clone-dir/src/main/docker/Dockerfile.jvm -t "$REGISTRY_URL/$REGISTRY_USERNAME/quarkus-rh:latest" /workspace/shared-workspace/clone-dir
+        buildah --storage-driver vfs push "$REGISTRY_URL/$REGISTRY_USERNAME/quarkus-rh:latest"

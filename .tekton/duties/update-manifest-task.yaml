@@ -9,9 +9,23 @@ spec:
   steps:
     - name: update
       image: alpine/git
+      env:
+        - name: GIT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: git-credentials
+              key: username
+        - name: GIT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: git-credentials
+              key: password
       script: |
+        git config --global user.email "thurdias@gmail.com"
+        git config --global user.name "thurdias"
         git clone https://github.com/thurdias/quarkus-cicd-ofc.git /workspace/shared-workspace/cicd-repo
         cd /workspace/shared-workspace/cicd-repo/k8s/stage
         sed -i 's|quay.io/my-repo/quarkus-app:.*|docker.io/arthurdbs/quarkus-app:latest|' deployment.yaml
         git commit -am "Update image to docker.io/arthurdbs/quarkus-app:latest"
+        git remote set-url origin https://$GIT_USERNAME:$GIT_PASSWORD@github.com/thurdias/quarkus-cicd-ofc.git
         git push
