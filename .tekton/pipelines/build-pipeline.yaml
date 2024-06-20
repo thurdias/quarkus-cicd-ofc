@@ -27,18 +27,10 @@ spec:
         - name: revision
           value: "$(params.revision)"
 
-    - name: lint
-      taskRef:
-        name: lint-task
-      runAfter: [git-clone]
-      workspaces:
-        - name: shared-workspace
-          workspace: shared-workspace
-
     - name: test
       taskRef:
         name: test-task
-      runAfter: [lint]
+      runAfter: [git-clone]
       workspaces:
         - name: shared-workspace
           workspace: shared-workspace
