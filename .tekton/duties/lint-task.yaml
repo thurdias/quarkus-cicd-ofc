@@ -8,7 +8,8 @@ spec:
     - name: shared-workspace
   steps:
     - name: lint
-      image: maven:3.6.3-jdk-8
+      image: quay.io/quarkus/ubi-quarkus-native-s2i:19.3.1-java11
+      workingdir: /workspace/shared-workspace/clone-dir
       script: |
-        cd /workspace/shared-workspace/clone-dir
-        mvn com.github.ekryd:maven-lint-plugin:check --fail-at-end || echo "Linting issues found but continuing"
+         mvn checkstyle:check
+
