@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: quarkus-app
-          image: docker.io/arthurdbs/quarkus-app:latest
+          image: docker.io/arthurdbs/quarkus-rh:latest
           ports:
             - containerPort: 8080
       imagePullSecrets:
