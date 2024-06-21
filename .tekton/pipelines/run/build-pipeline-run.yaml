@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: build-pipeline-run
+  generateName: build-pipeline-run-
   namespace: quarkus-ci
 spec:
   pipelineRef:
