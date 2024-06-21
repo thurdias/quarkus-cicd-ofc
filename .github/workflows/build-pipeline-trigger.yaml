@@ -23,10 +23,10 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
 
-     - name: Delete Existing PipelineRun
-       run: |
-         oc delete pipelinerun build-pipeline-run || true
-         sleep 5
+      - name: Delete Existing PipelineRun
+        run: |
+          oc delete pipelinerun build-pipeline-run || true
+          sleep 5
 
       - name: Apply PipelineRun for Build
         run: |
