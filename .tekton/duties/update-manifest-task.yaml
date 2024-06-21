@@ -25,7 +25,7 @@ spec:
         git config --global user.name "thurdias"
         git clone https://github.com/thurdias/quarkus-cicd-ofc.git /workspace/shared-workspace/cicd-repo
         cd /workspace/shared-workspace/cicd-repo/k8s/stage
-        sed -i 's|quay.io/my-repo/quarkus-app:.*|docker.io/arthurdbs/quarkus-app:latest|' deployment.yaml
-        git commit -am "Update image to docker.io/arthurdbs/quarkus-app:latest"
+        sed -i 's|quay.io/my-repo/quarkus-app:.*|docker.io/arthurdbs/quarkus-app:test|' deployment.yaml
+        git commit -am "Update image to docker.io/arthurdbs/quarkus-app:test"
         git remote set-url origin https://$GIT_USERNAME:$GIT_PASSWORD@github.com/thurdias/quarkus-cicd-ofc.git
         git push

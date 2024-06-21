@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quarkus-stage
+  labels:
+    name: quarkus-stage

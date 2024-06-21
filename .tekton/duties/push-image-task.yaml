@@ -26,5 +26,5 @@ spec:
           value: docker.io 
       script: |
         buildah --storage-driver vfs login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD" "$REGISTRY_URL"
-        buildah --storage-driver vfs bud -f /workspace/shared-workspace/clone-dir/src/main/docker/Dockerfile.jvm -t "$REGISTRY_URL/$REGISTRY_USERNAME/quarkus-rh:latest" /workspace/shared-workspace/clone-dir
-        buildah --storage-driver vfs push "$REGISTRY_URL/$REGISTRY_USERNAME/quarkus-rh:latest"
+        buildah --storage-driver vfs bud -f /workspace/shared-workspace/clone-dir/src/main/docker/Dockerfile.jvm -t "$REGISTRY_URL/$REGISTRY_USERNAME/quarkus-rh:test" /workspace/shared-workspace/clone-dir
+        buildah --storage-driver vfs push "$REGISTRY_URL/$REGISTRY_USERNAME/quarkus-rh:test"
