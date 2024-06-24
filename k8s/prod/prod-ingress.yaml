@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: quarkus-app
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  rules:
+  - host: bastion.4phq2.sandbox2146.opentlc.com
+    http:
+      paths:
+      - backend:
+          serviceName: quarkus-app
+          servicePort: http
+
+          
